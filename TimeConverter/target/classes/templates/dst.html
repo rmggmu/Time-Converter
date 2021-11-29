@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  
+<head>
+    <title>
+        Check DST
+    </title>
+	<style>
+	.topnav {
+  background-color: #333;
+  overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+	</style>
+</head>
+  
+<body style="text-align:center;">
+<div class="navbar">
+  <a href="http://localhost:8080/">Time Converter</a>
+  <a href="http://localhost:8080/epoch">Epoch Converter</a>
+  <a href="http://localhost:8080/dst">check DST</a>
+</div>
+      
+    <h1 style="color:green;"> 
+        Check DST
+    </h1>
+      
+    <p id="geeks" style=
+        "font-size:20px; font-weight:bold">
+    </p>
+  <li>
+    <label for="fromTimeZone">Select TimeZone</label>
+  </li>
+    <select id="arr"></select>
+      
+    <br><br>
+      
+    <button onclick="GFG_Fun();">
+        click here to fetch TimeZones
+    </button>
+    <br><br>	
+	
+	<button onclick="checkDst();">
+        Convert
+    </button>
+	<br>
+	<br>
+	<br>
+	 <li>
+    <label for="Result">DST: </label>
+  
+	<div id="ret">
+	</div>
+	</li>
+      
+    <script>
+		function GFG_Fun() {
+        var up = document.getElementById('geeks');
+        var select = document.getElementById("arr");
+        fetch('http://localhost:8080/3')
+    .then((response) => response.json())
+    .then((responseJSON) => {
+       var elmts=responseJSON;
+	   
+            for (var i = 0; i < elmts.length; i++) {
+                var optn = elmts[i];
+                var el = document.createElement("option");
+                el.textContent = optn;
+                el.value = optn;
+                select.appendChild(el);
+            }
+    });
+	}
+	function checkDst()
+	{
+	var timeZone=document.getElementById("arr").value;
+	var result= fetch("http://localhost:8080/2/"+encodeURIComponent(timeZone)).then((response) => response.text()).then((response) => { document.getElementById("ret").innerHTML=response;
+	console.log(response)});
+	console.log(result);
+	
+	}    
+    </script>
+</body>
+  
+</html>
